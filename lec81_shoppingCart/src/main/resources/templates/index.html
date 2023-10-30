@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f5f5f5;
+			margin: 0;
+			padding: 0;
+		}
+
+		h1 {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			background-color: #fff;
+			margin: 20px auto;
+		}
+
+		th,
+		td {
+			padding: 10px;
+			text-align: left;
+			border-bottom: 1px solid #ccc;
+		}
+
+		label,
+		input,
+		select {
+			display: block;
+			margin: 10px 0;
+		}
+
+		input[type="submit"] {
+			background-color: #333;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			cursor: pointer;
+		}
+
+		form {
+			margin: 20px auto;
+			max-width: 400px;
+			padding: 20px;
+			background-color: #fff;
+		}
+	</style>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    
+    <div th:if="${session.phones != null and !session.phones.isEmpty()}">
+        <h2>Your Cart:</h2>
+        <table>
+            <tr>
+                <th>Phone Model</th>
+                <th>Price</th>
+            </tr>
+            <tr th:each="phone : ${session.phones}">
+                <td th:text="${phone.model}"></td>
+                <td th:text="${phone.price}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Add a Phone to Your Cart:</h2>
+    <form method="post" th:action="@{/insertPhone}" th:object="${phone}">
+        <label for="model">Phone Model:</label>
+        <input type="text" id="model" name="model" th:field="*{model}" /><br>
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price" th:field="*{price}" /><br>
+        <input type="submit" value="Add to Cart" />
+    </form>
+</body>
+</html>
